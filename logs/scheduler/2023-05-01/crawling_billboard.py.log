@@ -2172,3 +2172,17 @@ IndentationError: expected an indented block
 [2023-05-01T10:38:32.046+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:38:32.046+0000] {dag.py:2726} INFO - Sync 1 DAGs
 [2023-05-01T10:38:32.069+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:38:32.069+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
 [2023-05-01T10:38:32.084+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.166 seconds
+[2023-05-01T10:39:02.409+0000] {processor.py:156} INFO - Started process (PID=2447) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:39:02.411+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:39:02.412+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:39:02.412+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:39:02.495+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:39:02.526+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:39:02.525+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:39:02.550+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:39:02.550+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:39:02.565+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.161 seconds
+[2023-05-01T10:39:32.893+0000] {processor.py:156} INFO - Started process (PID=2456) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:39:32.896+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:39:32.898+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:39:32.898+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:39:32.986+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:39:33.019+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:39:33.019+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:39:33.042+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:39:33.042+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:39:33.057+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.170 seconds

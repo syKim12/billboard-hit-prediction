@@ -2410,3 +2410,32 @@ File Path                                PID    Runtime      # DAGs    # Errors 
 /opt/airflow/dags/crawling_billboard.py                           1           0  0.19s           2023-05-01T10:38:01
 /opt/airflow/dags/example_code.py                                 1           0  0.14s           2023-05-01T10:38:01
 ================================================================================
+[2023-05-01T10:38:46.184+0000] {manager.py:889} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/crawling_billboard.py                           1           0  0.21s           2023-05-01T10:38:32
+/opt/airflow/dags/example_code.py                                 1           0  0.13s           2023-05-01T10:38:32
+================================================================================
+[2023-05-01T10:38:56.295+0000] {manager.py:758} INFO - Searching for files in /opt/airflow/dags
+[2023-05-01T10:38:56.314+0000] {manager.py:761} INFO - There are 2 files in /opt/airflow/dags
+[2023-05-01T10:39:16.669+0000] {manager.py:889} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/crawling_billboard.py                           1           0  0.19s           2023-05-01T10:39:02
+/opt/airflow/dags/example_code.py                                 1           0  0.13s           2023-05-01T10:39:02
+================================================================================
+[2023-05-01T10:39:47.155+0000] {manager.py:889} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/crawling_billboard.py                           1           0  0.21s           2023-05-01T10:39:33
+/opt/airflow/dags/example_code.py                                 1           0  0.13s           2023-05-01T10:39:33
+================================================================================
