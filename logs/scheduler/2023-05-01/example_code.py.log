@@ -4382,3 +4382,123 @@
 [2023-05-01T10:53:46.541+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:46.541+0000] {dag.py:2726} INFO - Sync 1 DAGs
 [2023-05-01T10:53:46.567+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:46.567+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
 [2023-05-01T10:53:46.591+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.115 seconds
+[2023-05-01T10:54:17.012+0000] {processor.py:156} INFO - Started process (PID=2718) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:54:17.014+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:54:17.016+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.015+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:54:17.033+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.033+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.034+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.034+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.036+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.036+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.037+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.037+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.039+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.038+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.039+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.039+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.041+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.041+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.042+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.042+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:17.050+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:54:17.105+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.105+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:54:17.138+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:17.138+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:54:17.158+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.151 seconds
+[2023-05-01T10:54:47.559+0000] {processor.py:156} INFO - Started process (PID=2727) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:54:47.561+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:54:47.562+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.562+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:54:47.571+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.571+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.572+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.572+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.573+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.573+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.574+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.574+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.575+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.575+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.575+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.575+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.576+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.576+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.577+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.577+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:54:47.582+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:54:47.617+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.617+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:54:47.640+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:54:47.640+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:54:47.657+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.103 seconds
+[2023-05-01T10:55:18.039+0000] {processor.py:156} INFO - Started process (PID=2736) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:55:18.041+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:55:18.042+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.041+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:55:18.051+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.051+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.052+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.052+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.053+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.053+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.053+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.053+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.054+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.054+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.055+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.055+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.056+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.056+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.057+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.057+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:18.062+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:55:18.098+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.098+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:55:18.121+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:18.121+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:55:18.138+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.103 seconds
+[2023-05-01T10:55:48.527+0000] {processor.py:156} INFO - Started process (PID=2745) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:55:48.529+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:55:48.530+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.530+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:55:48.540+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.539+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.540+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.540+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.542+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.542+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.542+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.542+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.543+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.543+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.544+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.544+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.545+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.545+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.545+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.545+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:55:48.550+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:55:48.586+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.586+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:55:48.609+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:55:48.609+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:55:48.627+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.104 seconds
+[2023-05-01T10:56:19.032+0000] {processor.py:156} INFO - Started process (PID=2754) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:56:19.034+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:56:19.035+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.035+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:56:19.045+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.045+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.046+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.046+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.047+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.047+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.048+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.048+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.049+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.049+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.049+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.049+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.051+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.051+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.051+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.051+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:19.056+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:56:19.092+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.092+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:56:19.115+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:19.115+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:56:19.131+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.104 seconds
+[2023-05-01T10:56:49.509+0000] {processor.py:156} INFO - Started process (PID=2763) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:56:49.510+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:56:49.511+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.511+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:56:49.520+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.520+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.521+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.521+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.522+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.522+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.523+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.523+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.524+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.523+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.524+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.524+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.525+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.525+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.526+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.525+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:56:49.530+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:56:49.566+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.566+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:56:49.589+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:56:49.588+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:56:49.605+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.100 seconds
+[2023-05-01T10:57:20.013+0000] {processor.py:156} INFO - Started process (PID=2772) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:57:20.015+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:57:20.016+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.016+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:57:20.026+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.026+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.027+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.026+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.027+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.027+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.028+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.028+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.029+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.029+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.030+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.030+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.031+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.031+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.031+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.031+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:20.036+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:57:20.071+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.071+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:57:20.093+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:20.093+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:57:20.111+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.102 seconds
+[2023-05-01T10:57:50.504+0000] {processor.py:156} INFO - Started process (PID=2781) to work on /opt/airflow/dags/example_code.py
+[2023-05-01T10:57:50.505+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/example_code.py for tasks to queue
+[2023-05-01T10:57:50.507+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.506+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/example_code.py
+[2023-05-01T10:57:50.516+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.516+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.517+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.517+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.518+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.518+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.519+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.519+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.520+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.520+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.520+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.520+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.522+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.521+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): print_the_context>, log_sql_query already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.522+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.522+0000] {taskmixin.py:211} WARNING - Dependency <Task(_PythonDecoratedOperator): log_sql_query>, print_the_context already registered for DAG: example_python_operator
+[2023-05-01T10:57:50.527+0000] {processor.py:809} INFO - DAG(s) dict_keys(['example_python_operator']) retrieved from /opt/airflow/dags/example_code.py
+[2023-05-01T10:57:50.563+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.563+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:57:50.588+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:57:50.588+0000] {dag.py:3490} INFO - Setting next_dagrun for example_python_operator to None, run_after=None
+[2023-05-01T10:57:50.604+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/example_code.py took 0.105 seconds
