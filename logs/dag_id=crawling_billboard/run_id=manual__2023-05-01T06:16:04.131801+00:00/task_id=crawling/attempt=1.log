@@ -1,0 +1,13 @@
+[2023-05-01T06:16:05.235+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: crawling_billboard.crawling manual__2023-05-01T06:16:04.131801+00:00 [queued]>
+[2023-05-01T06:16:05.243+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: crawling_billboard.crawling manual__2023-05-01T06:16:04.131801+00:00 [queued]>
+[2023-05-01T06:16:05.244+0000] {taskinstance.py:1331} INFO - Starting attempt 1 of 1
+[2023-05-01T06:16:05.255+0000] {taskinstance.py:1350} INFO - Executing <Task(PythonOperator): crawling> on 2023-05-01 06:16:04.131801+00:00
+[2023-05-01T06:16:05.260+0000] {standard_task_runner.py:57} INFO - Started process 248 to run task
+[2023-05-01T06:16:05.265+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'crawling_billboard', 'crawling', 'manual__2023-05-01T06:16:04.131801+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/crawling_billboard.py', '--cfg-path', '/tmp/tmp81c2mmm7']
+[2023-05-01T06:16:05.268+0000] {standard_task_runner.py:85} INFO - Job 4: Subtask crawling
+[2023-05-01T06:16:05.327+0000] {task_command.py:410} INFO - Running <TaskInstance: crawling_billboard.crawling manual__2023-05-01T06:16:04.131801+00:00 [running]> on host a4160f9711d9
+[2023-05-01T06:16:05.418+0000] {taskinstance.py:1570} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='crawling_billboard' AIRFLOW_CTX_TASK_ID='crawling' AIRFLOW_CTX_EXECUTION_DATE='2023-05-01T06:16:04.131801+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-05-01T06:16:04.131801+00:00'
+[2023-05-01T06:16:05.778+0000] {python.py:183} INFO - Done. Returned value was: None
+[2023-05-01T06:16:05.791+0000] {taskinstance.py:1373} INFO - Marking task as SUCCESS. dag_id=crawling_billboard, task_id=crawling, execution_date=20230501T061604, start_date=20230501T061605, end_date=20230501T061605
+[2023-05-01T06:16:05.849+0000] {local_task_job_runner.py:232} INFO - Task exited with return code 0
+[2023-05-01T06:16:05.869+0000] {taskinstance.py:2674} INFO - 0 downstream tasks scheduled from follow-on schedule check
