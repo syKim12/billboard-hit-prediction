@@ -2228,3 +2228,157 @@ IndentationError: expected an indented block
 [2023-05-01T10:42:35.904+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:42:35.904+0000] {dag.py:2726} INFO - Sync 1 DAGs
 [2023-05-01T10:42:35.927+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:42:35.927+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
 [2023-05-01T10:42:35.942+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.163 seconds
+[2023-05-01T10:43:06.266+0000] {processor.py:156} INFO - Started process (PID=2519) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:43:06.269+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:43:06.271+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:43:06.271+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:43:06.372+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:43:06.414+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:43:06.414+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:43:06.442+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:43:06.442+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:43:06.460+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.202 seconds
+[2023-05-01T10:43:36.726+0000] {processor.py:156} INFO - Started process (PID=2528) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:43:36.728+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:43:36.729+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:43:36.729+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:43:36.818+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:43:36.847+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:43:36.847+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:43:36.873+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:43:36.873+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:43:36.887+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.165 seconds
+[2023-05-01T10:44:07.191+0000] {processor.py:156} INFO - Started process (PID=2537) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:44:07.193+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:44:07.194+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:44:07.194+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:44:07.298+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:44:07.331+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:44:07.331+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:44:07.355+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:44:07.355+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:44:07.370+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.185 seconds
+[2023-05-01T10:44:37.705+0000] {processor.py:156} INFO - Started process (PID=2546) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:44:37.708+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:44:37.710+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:44:37.709+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:44:37.802+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:44:37.834+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:44:37.834+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:44:37.857+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:44:37.857+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:44:37.872+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.175 seconds
+[2023-05-01T10:45:08.216+0000] {processor.py:156} INFO - Started process (PID=2555) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:45:08.219+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:45:08.220+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:45:08.220+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:45:08.306+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:45:08.336+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:45:08.336+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:45:08.360+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:45:08.360+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:45:08.375+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.165 seconds
+[2023-05-01T10:45:38.684+0000] {processor.py:156} INFO - Started process (PID=2564) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:45:38.687+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:45:38.689+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:45:38.688+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:45:38.776+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:45:38.806+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:45:38.806+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:45:38.831+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:45:38.831+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:45:38.846+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.168 seconds
+[2023-05-01T10:46:09.184+0000] {processor.py:156} INFO - Started process (PID=2573) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:46:09.187+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:46:09.189+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:46:09.189+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:46:09.277+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:46:09.309+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:46:09.309+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:46:09.332+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:46:09.332+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:46:09.348+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.170 seconds
+[2023-05-01T10:46:39.655+0000] {processor.py:156} INFO - Started process (PID=2582) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:46:39.658+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:46:39.660+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:46:39.659+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:46:39.750+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:46:39.781+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:46:39.781+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:46:39.804+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:46:39.804+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:46:39.819+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.172 seconds
+[2023-05-01T10:47:10.118+0000] {processor.py:156} INFO - Started process (PID=2591) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:47:10.121+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:47:10.123+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:47:10.123+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:47:10.208+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:47:10.239+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:47:10.239+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:47:10.262+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:47:10.262+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:47:10.277+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.166 seconds
+[2023-05-01T10:47:40.603+0000] {processor.py:156} INFO - Started process (PID=2600) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:47:40.605+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:47:40.607+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:47:40.607+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:47:40.694+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:47:40.724+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:47:40.724+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:47:40.749+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:47:40.749+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:47:40.763+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.166 seconds
+[2023-05-01T10:48:11.087+0000] {processor.py:156} INFO - Started process (PID=2609) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:48:11.090+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:48:11.091+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:48:11.091+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:48:11.184+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:48:11.222+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:48:11.222+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:48:11.245+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:48:11.245+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:48:11.260+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.178 seconds
+[2023-05-01T10:48:41.569+0000] {processor.py:156} INFO - Started process (PID=2618) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:48:41.572+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:48:41.574+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:48:41.574+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:48:41.667+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:48:41.701+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:48:41.700+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:48:41.726+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:48:41.726+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:48:41.741+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.176 seconds
+[2023-05-01T10:49:12.095+0000] {processor.py:156} INFO - Started process (PID=2627) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:49:12.098+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:49:12.099+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:49:12.099+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:49:12.213+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:49:12.248+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:49:12.247+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:49:12.273+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:49:12.273+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:49:12.288+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.197 seconds
+[2023-05-01T10:49:42.588+0000] {processor.py:156} INFO - Started process (PID=2636) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:49:42.590+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:49:42.596+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:49:42.591+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:49:42.690+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:49:42.723+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:49:42.722+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:49:42.746+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:49:42.746+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:49:42.763+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.181 seconds
+[2023-05-01T10:50:13.084+0000] {processor.py:156} INFO - Started process (PID=2645) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:50:13.087+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:50:13.089+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:50:13.089+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:50:13.196+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:50:13.229+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:50:13.228+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:50:13.253+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:50:13.253+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:50:13.267+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.191 seconds
+[2023-05-01T10:50:43.618+0000] {processor.py:156} INFO - Started process (PID=2654) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:50:43.621+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:50:43.623+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:50:43.623+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:50:43.722+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:50:43.756+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:50:43.756+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:50:43.782+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:50:43.782+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:50:43.800+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.189 seconds
+[2023-05-01T10:51:14.106+0000] {processor.py:156} INFO - Started process (PID=2663) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:51:14.108+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:51:14.109+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:51:14.109+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:51:14.198+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:51:14.229+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:51:14.228+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:51:14.253+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:51:14.252+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:51:14.268+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.166 seconds
+[2023-05-01T10:51:44.624+0000] {processor.py:156} INFO - Started process (PID=2672) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:51:44.627+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:51:44.628+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:51:44.628+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:51:44.715+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:51:44.745+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:51:44.744+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:51:44.768+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:51:44.768+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:51:44.783+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.165 seconds
+[2023-05-01T10:52:15.077+0000] {processor.py:156} INFO - Started process (PID=2681) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:52:15.079+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:52:15.081+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:52:15.081+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:52:15.168+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:52:15.199+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:52:15.199+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:52:15.223+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:52:15.223+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:52:15.237+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.167 seconds
+[2023-05-01T10:52:45.483+0000] {processor.py:156} INFO - Started process (PID=2690) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:52:45.486+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:52:45.488+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:52:45.488+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:52:45.588+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:52:45.623+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:52:45.623+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:52:45.647+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:52:45.647+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:52:45.662+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.186 seconds
+[2023-05-01T10:53:15.975+0000] {processor.py:156} INFO - Started process (PID=2699) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:53:15.977+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:53:15.979+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:15.979+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:53:16.066+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:53:16.096+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:16.096+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:53:16.120+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:16.120+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:53:16.134+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.166 seconds
+[2023-05-01T10:53:46.470+0000] {processor.py:156} INFO - Started process (PID=2708) to work on /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:53:46.473+0000] {processor.py:799} INFO - Processing file /opt/airflow/dags/crawling_billboard.py for tasks to queue
+[2023-05-01T10:53:46.475+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:46.474+0000] {dagbag.py:541} INFO - Filling up the DagBag from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:53:46.563+0000] {processor.py:809} INFO - DAG(s) dict_keys(['crawling_billboard']) retrieved from /opt/airflow/dags/crawling_billboard.py
+[2023-05-01T10:53:46.601+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:46.601+0000] {dag.py:2726} INFO - Sync 1 DAGs
+[2023-05-01T10:53:46.633+0000] {logging_mixin.py:149} INFO - [2023-05-01T10:53:46.632+0000] {dag.py:3490} INFO - Setting next_dagrun for crawling_billboard to 2023-04-30T00:00:00+00:00, run_after=2023-05-07T00:00:00+00:00
+[2023-05-01T10:53:46.649+0000] {processor.py:178} INFO - Processing /opt/airflow/dags/crawling_billboard.py took 0.185 seconds
