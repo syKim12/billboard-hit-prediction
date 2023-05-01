@@ -34,7 +34,7 @@ def crawling():
         print("SUCCESS", date)
         csv_open.close()
     else:
-        print("IT IS NOT SATURDAY", date)
+        print("IT IS NOT SATURDAY", crawl_date)
         
 
 crawling_dag = DAG(
