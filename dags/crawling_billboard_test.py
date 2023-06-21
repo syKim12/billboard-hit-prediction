@@ -6,7 +6,12 @@ from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.amazon.aws.operators.s3 import S3CreateObjectOperator
 
-def crawling(crawl_date, date, csv_filename):
+def crawling():
+    global crawl_date
+    #crawl_date = datetime.datetime.now() - datetime.timedelta(days=1)
+    crawl_date = crawl_date - datetime.timedelta(days=1)
+    global date, csv_filename
+    print(os.getcwd())
     if crawl_date.weekday() == 5: # crawl only on saturday
         url = "https://www.billboard.com/charts/hot-100/" + date + "/"
         req = requests.get(url)  
@@ -18,6 +23,8 @@ def crawling(crawl_date, date, csv_filename):
         songs = bsObject.select('div.pmc-paywall > div > div > div > div.chart-results-list.\/\/.lrv-u-padding-t-150.lrv-u-padding-t-050\@mobile-max > div > ul > li.lrv-u-width-100p > ul > li.o-chart-results-list__item.\/\/.lrv-u-flex-grow-1.lrv-u-flex.lrv-u-flex-direction-column.lrv-u-justify-content-center.lrv-u-border-b-1.u-border-b-0\@mobile-max.lrv-u-border-color-grey-light.lrv-u-padding-l-1\@mobile-max')
 
         # save into a csv file
+        #dir = os.path('~/airflow/')
+        #csv_filename = dir + date + "_chart.csv"
         csv_open = open(csv_filename, 'w', encoding='UTF-8', newline='')
         csv_writer = csv.writer(csv_open)
         csv_writer.writerow(('Date','Rank','Title','Artist'))
@@ -29,34 +36,30 @@ def crawling(crawl_date, date, csv_filename):
             artist = i[1].find('span').text.strip()
             csv_writer.writerow([day, rank, title, artist])
 
-        print("SUCCESS", date)
-        csv_open.close()
         
+        csv_open.close()
+        print("SUCCESS", date)
     else:
         print("IT IS NOT SATURDAY", crawl_date)
         
 
 crawling_dag = DAG(
-    dag_id='crawling_billboard',
+    dag_id='crawling_billboard_test',
     catchup=False,
     start_date=datetime.datetime(2023, 4, 10),
-    schedule='5 0 * * sun',
+    schedule='14 11 * * *',
     tags=['crawling']
 )
 
-# initial setting
-crawl_date = datetime.datetime.now() - datetime.timedelta(days=1)
+crawl_date = datetime.date(year = 2023, month = 6, day = 18)
 date = crawl_date.strftime('%Y-%m-%d')
-csv_filename = date + "_chart.csv" 
+csv_filename = date + "_chart.csv"
 
-# start crawling
 crawling_operator = PythonOperator(
-        task_id='crawling',
+        task_id='crawling_test',
         python_callable=crawling,
-        op_kwargs={"crawl_date": crawl_date, "date": date, "csv_filename": csv_filename},
         dag=crawling_dag)
 
-# start uploading csv to S3 bucket
 create_object = S3CreateObjectOperator(
     task_id="create_object",
     s3_bucket="billboard-chart",

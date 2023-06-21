@@ -1,2 +1,4 @@
 .env
 logs
+dags/__pycache__
+dags/.DS_Store
