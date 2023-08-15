@@ -1,6 +1,6 @@
 .env
+.csv
 logs
 dags/__pycache__
 dags/.DS_Store
 .DS_Store
-.csv
