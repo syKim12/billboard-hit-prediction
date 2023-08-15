@@ -60,7 +60,7 @@ crawling_dag = DAG(
     dag_id='crawling_billboard',
     catchup=False,
     start_date=datetime.datetime(2023, 4, 10),
-    schedule='30 6 * * *',
+    schedule='5 0 * * sun',
     tags=['crawling']
 )
 

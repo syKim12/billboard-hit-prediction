@@ -57,15 +57,15 @@ def load_data():
 
 
 crawling_dag = DAG(
-    dag_id='crawling_billboard',
+    dag_id='crawling_billboard_test',
     catchup=False,
     start_date=datetime.datetime(2023, 4, 10),
-    schedule='30 6 * * *',
+    schedule='47 6 * * *',
     tags=['crawling']
 )
 
 # initial setting
-crawl_date = datetime.datetime.now() - datetime.timedelta(days=1)
+crawl_date = datetime.date(2023, 8, 12)
 date = crawl_date.strftime('%Y-%m-%d')
 csv_filename = date + "_chart.csv" 
 
