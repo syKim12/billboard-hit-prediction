@@ -16,5 +16,6 @@ nohup.out
 start-spark.sh
 .cache
 data
-
+deployment/secrets.json
+deployment/model_api/__pycache__
 
