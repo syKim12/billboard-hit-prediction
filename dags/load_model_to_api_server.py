@@ -84,18 +84,18 @@ def save_model_to_registry():
     
     #Logging to MLflow
     try:
-        # Explicitly setting the MLflow tracking URI based on a known working configuration
+        
         mlflow.set_tracking_uri("http://mlflow-server:5000")
         print("Current MLflow Tracking URI:", mlflow.get_tracking_uri())
         print('MLflow tracking URI set')
 
-        time.sleep(10)  # Optional: Sleep to ensure any network delays are accounted for
+        time.sleep(10)  
 
-        model_name = "sk_model"  # Model name set directly
-        mlflow.set_experiment("new-exp")  # Setting the experiment
+        model_name = "sk_model"  
+        mlflow.set_experiment("new-exp")  
         print('Experiment set with model name:', model_name)
 
-        # Assuming X_train and model_pipeline are defined elsewhere and available here
+        
         signature = mlflow.models.infer_signature(X_train, model_pipeline.predict(X_train))
         
         with mlflow.start_run():
@@ -103,9 +103,9 @@ def save_model_to_registry():
             mlflow.log_metrics({"train_acc": train_acc, "valid_acc": valid_acc})
             mlflow.sklearn.log_model(sk_model=model_pipeline, artifact_path=model_name, signature=signature, input_example=X_train.iloc[:5])
 
-        # Cleanup and save data
-        df.to_csv("/opt/airflow/data.csv", index=False)  # Ensure the path is writable or adjust accordingly
-        conn.close()  # Assuming conn is your database connection
+        # Close connection
+        df.to_csv("/opt/airflow/data.csv", index=False)  
+        conn.close() 
 
         return "Model and data logging complete."
     except Exception as e:
@@ -155,14 +155,6 @@ copy_model = BashOperator(
     dag=load_model_dag,
 )
 
-
-# load_and_run_container = SSHOperator(
-#     task_id='run_docker_container',
-#     ssh_conn_id='ssh_to_ec2',  
-#     command='docker compose down',
-#     timeout=600,
-#     dag=load_model_dag,
-# )   
 
 container_down = SSHOperator(
     task_id='stop_docker_container',

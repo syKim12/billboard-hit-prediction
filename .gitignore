@@ -21,4 +21,6 @@ billboard-project/*.json
 billboard-project/**/*.csv
 billboard-project/**/*.json
 billboard-project/*.ipynb
+./.DS_Store
+
 

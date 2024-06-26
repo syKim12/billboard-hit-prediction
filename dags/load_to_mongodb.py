@@ -55,7 +55,7 @@ def spotify_csv():
     # check latest updated date
     latest_document = collection.find_one({}, sort=[('Date', -1)])
     if latest_document['Date'] == date:
-        # if the data is already updated, then stop running the code
+        
         print('data already exists!')
         exit(0)
 
