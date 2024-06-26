@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  api-with-model:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    container_name: api-with-model
+    ports:
+      - 8000:8000
+    healthcheck:
+      test:
+        - CMD
+        - curl -X POST http://localhost:8000/predict
+        - -H
+        - "Content-Type: application/json"
+        - -d
+        - '{"Title": "Bruno Mars", "Artist": "Just the way you are"}'
+      interval: 10s
+      timeout: 5s
+      retries: 5
