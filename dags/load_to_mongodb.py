@@ -6,6 +6,7 @@ from airflow.providers.ssh.operators.ssh import SSHOperator
 from airflow.providers.mongo.hooks.mongo import MongoHook
 from datetime import datetime,timedelta
 from spotipy.oauth2 import SpotifyClientCredentials
+from airflow.operators.dagrun_operator import TriggerDagRunOperator
 import mlflow
 from argparse import ArgumentParser
 import pandas as pd
@@ -55,7 +56,7 @@ def spotify_csv():
     # check latest updated date
     latest_document = collection.find_one({}, sort=[('Date', -1)])
     if latest_document['Date'] == date:
-        
+        # if the data is already updated, then stop running the code
         print('data already exists!')
         exit(0)
 
@@ -144,6 +145,10 @@ load_data = PythonOperator(
     dag=load_csv_mongo_dag
     )
 
-
+trigger_model_training = TriggerDagRunOperator(
+    task_id='trigger_model_training',
+    trigger_dag_id='load-model-to-api-server',
+    wait_for_completion=False
+)
     
-get_spotify_csv >> load_data
+get_spotify_csv >> load_data >> trigger_model_training

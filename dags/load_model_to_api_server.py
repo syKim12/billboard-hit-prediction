@@ -122,7 +122,9 @@ def download_model(model_name, run_id):
     destination_path = "/opt/airflow/dags"
 
     # Download model artifacts
-    artifact_path = f"runs:/{run_id}/{model_name}"
+    client = mlflow.MlflowClient()
+    version = client.get_model_version_by_alias(model_name, "prod").version
+    artifact_path = f"runs:/{version}/{model_name}"
     mlflow.artifacts.download_artifacts(artifact_uri=artifact_path, dst_path=destination_path)
 
     print(f"Downloaded artifacts from {artifact_path} to local directory.")
@@ -130,7 +132,7 @@ def download_model(model_name, run_id):
 
 load_model_dag =  DAG(
     dag_id="load-model-to-api-sever",
-    schedule='47 12 * * *',
+    schedule='0 12 * * 1',
     start_date=datetime(2023,7,20),
     catchup=False)
 
