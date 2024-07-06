@@ -35,14 +35,15 @@ def get_update_date():
 
     return sp, playlist_URI, track_uris, date
 
+def get_audio_features(sp, track_ids):
+    features = []
+    for i in range(0, len(track_ids), 100):
+        batch = track_ids[i:i+100]
+        features.extend(sp.audio_features(batch))
+    return features
 
 def spotify_csv():
     sp, playlist_URI, track_uris, date = get_update_date()
-
-    rank = 1
-    date = sp.playlist_tracks(playlist_URI)["items"][0]["added_at"].split("T")[0]
-     
-    csv_filename = '/opt/airflow/csv/' + date + '_chart.csv'
 
     try:
         hook = MongoHook(mongo_conn_id='mongo_default')
@@ -60,52 +61,30 @@ def spotify_csv():
         print('data already exists!')
         exit(0)
 
+    playlist_tracks = sp.playlist_tracks(playlist_URI)["items"]
+    track_ids = [track["track"]["id"] for track in playlist_tracks]
+    
+    audio_features = get_audio_features(sp, track_ids)
+    
+    artist_uris = [track["track"]["artists"][0]["uri"] for track in playlist_tracks]
+    artist_info = [sp.artist(uri) for uri in artist_uris]
+    
+    csv_filename = '/opt/airflow/csv/' + date + '_chart.csv'
     with open(csv_filename, 'w', encoding='UTF-8', newline='') as csv_open:
         csv_writer = csv.writer(csv_open)
         csv_writer.writerow(('TrackID','Date','Rank','Title','Artist','Danceability','Energy','Loudness','Speechiness','Acousticness','Instrumentalness','Liveness','Valence','Tempo','Duration_ms', 'Hit', 'Followers'))
 
-        for track in sp.playlist_tracks(playlist_URI)["items"]:
-            #URI
+        for i, track in enumerate(playlist_tracks):
             track_id = track["track"]["id"]
-            
-            #Track name
             track_name = track["track"]["name"]
-            
-            #Main Artist
-            artist_uri = track["track"]["artists"][0]["uri"]
-            artist_info = sp.artist(artist_uri)
-            
-            #Name, popularity, genre
             artist_name = track["track"]["artists"][0]["name"]
-            artist_pop = artist_info["popularity"]
-            artist_genres = artist_info["genres"]
+            followers = artist_info[i]["followers"]["total"]
+
+            features = audio_features[i]
             
-            #Album
-            album = track["track"]["album"]["name"]
-            
-            #Popularity of the track
-            track_pop = track["track"]["popularity"]
-
-            audio_features = sp.audio_features(track_id)[0]
-            
-            danceability = audio_features['danceability']
-            energy = audio_features["energy"]
-            loudness = audio_features["loudness"]
-            speechiness = audio_features["speechiness"]
-            acousticness = audio_features["acousticness"]
-            instrumentalness = audio_features["instrumentalness"]
-            liveness = audio_features["liveness"]
-            valence = audio_features["valence"]
-            tempo = audio_features["tempo"]
-            duration_ms = audio_features["duration_ms"]
-
-            # get popularity and number of followers of artist
-            followers = artist_info["followers"]["total"]
-
-            csv_writer.writerow([track_id, date, rank, track_name, artist_name, danceability, energy, loudness,speechiness,acousticness, instrumentalness, liveness,valence, tempo, duration_ms, 1, followers])
-            rank += 1
-
-    return csv_filename 
+            csv_writer.writerow([track_id, date, i+1, track_name, artist_name, features['danceability'], features['energy'], features['loudness'], features['speechiness'], features['acousticness'], features['instrumentalness'], features['liveness'], features['valence'], features['tempo'], features['duration_ms'], 1, followers])
+    
+    return csv_filename
 
 
 def load_data():
