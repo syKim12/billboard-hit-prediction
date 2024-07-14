@@ -19,7 +19,7 @@ client_secret= secrets["client_secret"]
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-def search(title, artist):
+async def search(title, artist):
     Followers = []
     Acousticness = []
     Danceability = []
@@ -32,7 +32,7 @@ def search(title, artist):
     Tempo = []
     Valence = []
 
-    track_info = sp.search(q=artist+","+title, type="track", limit=5)
+    track_info = await sp.search(q=artist+","+title, type="track", limit=5)
     track_id = track_info["tracks"]["items"][0]["id"]
     artist_id = track_info["tracks"]["items"][0]['artists'][0]['id']
     artist_info = sp.artist(artist_id)

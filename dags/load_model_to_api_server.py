@@ -115,7 +115,7 @@ def save_model_to_registry():
     return
 
 
-def download_model(model_name, run_id):
+def download_model(model_name, experiment_name):
     mlflow.set_tracking_uri("http://mlflow-server:5000")
     print("Current MLflow Tracking URI:", mlflow.get_tracking_uri())
 
@@ -123,8 +123,25 @@ def download_model(model_name, run_id):
 
     # Download model artifacts
     client = mlflow.MlflowClient()
-    version = client.get_model_version_by_alias(model_name, "prod").version
-    artifact_path = f"runs:/{version}/{model_name}"
+    print('Connected!')
+    # get experiment id
+    experiment = client.get_experiment_by_name(experiment_name)
+    if experiment:
+        experiment_id = experiment.experiment_id
+    else:
+        raise Exception(f"Experiment with name '{experiment_name}' not found.")
+
+    # get the latest run by checking runs in the experiment
+    runs = client.search_runs(experiment_ids=[experiment_id], order_by=["start_time DESC"])
+    if runs:
+        latest_run = runs[0]
+    else:
+        raise Exception("No runs found.")
+
+    versions = client.search_model_versions(f"name='{model_name}'")
+    latest_version = max(versions, key=lambda x: int(x.version))
+
+    artifact_path = f"runs:/{latest_version.run_id}/{model_name}"
     mlflow.artifacts.download_artifacts(artifact_uri=artifact_path, dst_path=destination_path)
 
     print(f"Downloaded artifacts from {artifact_path} to local directory.")
@@ -145,15 +162,15 @@ save_model = PythonOperator(
 download_model = PythonOperator(
     task_id = 'download_model_from_registry',
     python_callable=download_model,
-    op_kwargs={'model_name': 'sk_model', 'run_id': '723b2685c6b0432093d38ff188ee40a6'},
+    op_kwargs={'model_name': 'sk_model', 'experiment_name': 'new-exp'},
     dag=load_model_dag
 )
 
 copy_model = BashOperator(
     task_id='copy_model_to_server',
-    bash_command='scp -o StrictHostKeyChecking=no -r -i /opt/airflow/test.pem '
+    bash_command='scp -o StrictHostKeyChecking=no -r -i /opt/airflow/NERDS-key.pem '
         '/opt/airflow/dags/sk_model /opt/airflow/app.py /opt/airflow/schemas.py /opt/airflow/docker-compose.yaml /opt/airflow/Dockerfile.fastapi '
-        'ubuntu@ec2-43-201-229-224.ap-northeast-2.compute.amazonaws.com:/home/ubuntu',
+        'ubuntu@ec2-3-36-100-124.ap-northeast-2.compute.amazonaws.com:/home/ubuntu',
     dag=load_model_dag,
 )
 
