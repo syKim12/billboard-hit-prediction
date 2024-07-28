@@ -132,19 +132,14 @@ def download_model(model_name, experiment_name):
         raise Exception(f"Experiment with name '{experiment_name}' not found.")
 
     # get the latest run by checking runs in the experiment
-    runs = client.search_runs(experiment_ids=[experiment_id], order_by=["start_time DESC"])
+    runs = client.search_runs(experiment_ids=[experiment_id]) 
     if runs:
-        latest_run = runs[0]
+        latest_run = max(runs, key=lambda x: x.info.start_time)
     else:
         raise Exception("No runs found.")
+    
+    client.download_artifacts(run_id=latest_run.info.run_id, path='sk_model', dst_path='/opt/airflow/dags')
 
-    versions = client.search_model_versions(f"name='{model_name}'")
-    latest_version = max(versions, key=lambda x: int(x.version))
-
-    artifact_path = f"runs:/{latest_version.run_id}/{model_name}"
-    mlflow.artifacts.download_artifacts(artifact_uri=artifact_path, dst_path=destination_path)
-
-    print(f"Downloaded artifacts from {artifact_path} to local directory.")
     return
 
 load_model_dag =  DAG(
@@ -169,8 +164,8 @@ download_model = PythonOperator(
 copy_model = BashOperator(
     task_id='copy_model_to_server',
     bash_command='scp -o StrictHostKeyChecking=no -r -i /opt/airflow/NERDS-key.pem '
-        '/opt/airflow/dags/sk_model /opt/airflow/app.py /opt/airflow/schemas.py /opt/airflow/docker-compose.yaml /opt/airflow/Dockerfile.fastapi '
-        'ubuntu@ec2-3-36-100-124.ap-northeast-2.compute.amazonaws.com:/home/ubuntu',
+        '/opt/airflow/dags/sk_model /opt/airflow/app.py /opt/airflow/secrets.json /opt/airflow/schemas.py /opt/airflow/docker-compose.yaml /opt/airflow/Dockerfile.fastapi '
+        'ubuntu@ec2-54-180-214-122.ap-northeast-2.compute.amazonaws.com:/home/ubuntu',
     dag=load_model_dag,
 )
 
