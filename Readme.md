@@ -10,9 +10,11 @@ To make a prediction, send a POST request to the '/predict' endpoint with the so
 Below is an example using the song "Good Day" by IU.
 
 
-'''bash
+```bash
+
 curl -X POST http://ec2-54-180-214-122.ap-northeast-2.compute.amazonaws.com:8000/predict -H  "Content-Type: application/json" -d '{"Title": "Good day", "Artist": "IU"}'
-'''
+
+```
 ### Response
 The API will return a prediction result, which shows whether the song is likely to make it into the Billboard Hot 100 chart. 
 
