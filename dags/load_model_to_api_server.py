@@ -180,7 +180,7 @@ container_down = SSHOperator(
 container_up = SSHOperator(
     task_id='start_docker_container',
     ssh_conn_id='ssh_to_ec2',  
-    command='nohup docker compose up --build > /home/ubuntu/log.out 2>&1 &',
+    command='nohup docker compose up --build >> /home/ubuntu/logs/$(date +%Y-%m-%d)_log.out 2>&1 &',
     dag=load_model_dag,
 )   
 save_model >> download_model >> copy_model >> container_down >> container_up
