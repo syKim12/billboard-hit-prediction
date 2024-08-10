@@ -17,6 +17,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
 from airflow.hooks.base_hook import BaseHook
+from be_great import GReaT
 
 def save_model_to_registry():
     # 0. set mlflow environments
@@ -40,17 +41,28 @@ def save_model_to_registry():
     chart = db.get_collection("chart")
     non_chart = db.get_collection("non_chart")
     chart_df = pd.DataFrame(list(chart.find()))
-    chart_df = chart_df[chart_df["Date"].isna() == False]
+    # chart_df = chart_df[chart_df["Date"].isna() == False]
     non_chart_df = pd.DataFrame(list(non_chart.find()))
     columns = ["Followers", "Acousticness", "Danceability", "Duration_ms", "Energy", 
             "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Tempo", "Valence", "Hit"]
     chart_df = chart_df[columns].dropna()
+    chart_df = chart_df.drop_duplicates()
     non_chart_df = non_chart_df[columns]
     df = pd.concat([chart_df, non_chart_df], axis=0)
+    df["Hit"] = df["Hit"].astype("int")
+
+    # ++Synthesize non-chart data
+    n_samples = len(df[df["Hit"] == 1]) - len(df[df["Hit"] == 0])
+    great = GReaT.load_from_dir("/opt/airflow/dags/GreaT")
+    syn_non_chart = great.sample(n_samples=n_samples)
+
+    df = pd.concat([df, syn_non_chart], axis=0)
+    for c in columns:
+        df[c] = pd.to_numeric(df[c], errors='coerce')
 
     X = df.iloc[:, (df.columns != "Hit")]
-    object_cols = X.select_dtypes(include=['object']).columns
-    X.loc[:, object_cols] = X.loc[:, object_cols].astype(float)
+    # object_cols = X.select_dtypes(include=['object']).columns
+    X = X.astype(float)
     y = df.iloc[:, -1]
     y = y.astype("int")
 
