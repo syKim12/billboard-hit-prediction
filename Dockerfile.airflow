@@ -1,11 +1,12 @@
-FROM apache/airflow:2.9.3-python3.9
+FROM apache/airflow:2.9.3-python3.10
 
-RUN apt-get update && apt-get install -y curl 
+USER root
+RUN apt-get update && apt-get install -y curl && apt-get install -y gosu
 
 RUN pip3 install apache-airflow-providers-mongo 
 RUN pip3 install spotipy 
 RUN pip3 install apache-airflow-providers-apache-spark 
 RUN pip3 install selenium
-RUN pip3 install mlflow pymongo pandas scikit-learn xgboost be-great
+RUN pip3 install mlflow pymongo pandas scikit-learn xgboost be-great torch torchvision
 
 COPY GreaT/ ./GreaT/

@@ -53,7 +53,14 @@ def save_model_to_registry():
 
     # ++Synthesize non-chart data
     n_samples = len(df[df["Hit"] == 1]) - len(df[df["Hit"] == 0])
-    great = GReaT.load_from_dir("/opt/airflow/dags/GreaT")
+    great = GReaT("distilgpt2",                         # Name of the large language model used (see HuggingFace for more options)
+              epochs=1,                             # Number of epochs to train (only one epoch for demonstration)
+              save_steps=2000,                      # Save model weights every x steps
+              logging_steps=50                     # Log the loss and learning rate every x steps
+             )
+    great.load_finetuned_model("/opt/airflow/GreaT/model.pt")
+
+    #great = GReaT.load_from_dir("/opt/airflow/GreaT", weights_only=True)
     syn_non_chart = great.sample(n_samples=n_samples)
 
     df = pd.concat([df, syn_non_chart], axis=0)
