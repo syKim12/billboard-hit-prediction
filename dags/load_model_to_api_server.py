@@ -1,4 +1,4 @@
-import os, json, csv, spotipy, time
+import os, json, csv, spotipy, time, torch
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
@@ -53,22 +53,16 @@ def save_model_to_registry():
 
     # ++Synthesize non-chart data
     n_samples = len(df[df["Hit"] == 1]) - len(df[df["Hit"] == 0])
-    great = GReaT("distilgpt2",                         # Name of the large language model used (see HuggingFace for more options)
-              epochs=1,                             # Number of epochs to train (only one epoch for demonstration)
-              save_steps=2000,                      # Save model weights every x steps
-              logging_steps=50                     # Log the loss and learning rate every x steps
-             )
-    great.load_finetuned_model("/opt/airflow/GreaT/model.pt")
-
-    #great = GReaT.load_from_dir("/opt/airflow/GreaT", weights_only=True)
-    syn_non_chart = great.sample(n_samples=n_samples)
+    print('samples: ', n_samples)
+    great = GReaT.load_from_dir("/opt/airflow/GreaT")
+    print('model loaded!')
+    syn_non_chart = great.sample(n_samples=n_samples, device="cpu")
 
     df = pd.concat([df, syn_non_chart], axis=0)
     for c in columns:
         df[c] = pd.to_numeric(df[c], errors='coerce')
 
     X = df.iloc[:, (df.columns != "Hit")]
-    # object_cols = X.select_dtypes(include=['object']).columns
     X = X.astype(float)
     y = df.iloc[:, -1]
     y = y.astype("int")
@@ -110,8 +104,8 @@ def save_model_to_registry():
 
         time.sleep(10)  
 
-        model_name = "sk_model"  
-        mlflow.set_experiment("new-exp")  
+        model_name = "xgboost"  
+        mlflow.set_experiment("billboard-hit-exp")  
         print('Experiment set with model name:', model_name)
 
         
@@ -157,7 +151,7 @@ def download_model(model_name, experiment_name):
     else:
         raise Exception("No runs found.")
     
-    client.download_artifacts(run_id=latest_run.info.run_id, path='sk_model', dst_path='/opt/airflow/dags')
+    client.download_artifacts(run_id=latest_run.info.run_id, path='xgboost', dst_path='/opt/airflow/dags')
 
     return
 
@@ -176,14 +170,14 @@ save_model = PythonOperator(
 download_model = PythonOperator(
     task_id = 'download_model_from_registry',
     python_callable=download_model,
-    op_kwargs={'model_name': 'sk_model', 'experiment_name': 'new-exp'},
+    op_kwargs={'model_name': 'xgboost', 'experiment_name': 'billboard-hit-exp'},
     dag=load_model_dag
 )
 
 copy_model = BashOperator(
     task_id='copy_model_to_server',
     bash_command='scp -o StrictHostKeyChecking=no -r -i /opt/airflow/NERDS-key.pem '
-        '/opt/airflow/dags/sk_model /opt/airflow/app.py /opt/airflow/secrets.json /opt/airflow/schemas.py /opt/airflow/docker-compose.yaml /opt/airflow/Dockerfile.fastapi '
+        '/opt/airflow/dags/xgboost /opt/airflow/app.py /opt/airflow/secrets.json /opt/airflow/schemas.py /opt/airflow/docker-compose.yaml /opt/airflow/Dockerfile.fastapi '
         'ubuntu@ec2-54-180-214-122.ap-northeast-2.compute.amazonaws.com:/home/ubuntu',
     dag=load_model_dag,
 )
