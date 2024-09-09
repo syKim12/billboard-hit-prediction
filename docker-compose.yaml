@@ -48,7 +48,7 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - postgres-airflow-db:/var/lib/postgresql/data
+      - postgres-db-volume:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
@@ -312,7 +312,7 @@ services:
       - -c
       - |
         mc config host add mlflowminio http://mlflow-artifact-store:9000 minio miniostorage &&
-        mc mb --ignore-existing mlflowminio/mlflow
+        mc mb --ignore-existing mlflowminio/mlflow &&
         mlflow server \
         --backend-store-uri postgresql://mlflowuser:mlflowpassword@mlflow-backend-store/mlflowdatabase \
         --default-artifact-root s3://mlflow/ \
@@ -320,7 +320,7 @@ services:
 
 
 volumes:
-  postgres-airflow-db:
+  postgres-db-volume:
   postgres-mlflow-db:
   minio-volume:
 
