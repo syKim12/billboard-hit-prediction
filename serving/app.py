@@ -7,11 +7,14 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from concurrent.futures import ThreadPoolExecutor
 import asyncio
+import boto3
+from botocore.exceptions import NoCredentialsError, ClientError
+from boto3.session import Session
 
 secrets = json.loads(open('/usr/app/secrets.json').read())
 
 def get_model():
-    model = mlflow.sklearn.load_model(model_uri="./sk_model")
+    model = mlflow.sklearn.load_model(model_uri="./xgboost")
     return model
 
 client_id = secrets["client_id"]
@@ -80,3 +83,38 @@ async def predict(song: PredictIn) -> PredictOut:
     df = await search(song.Title, song.Artist)
     pred = MODEL.predict(df).item()
     return PredictOut(Hit=pred)
+
+@app.get("/download-latest-model/")
+async def download_latest_model():
+    session = Session(
+        aws_access_key_id=secrets["s3_access_key_id"],
+        aws_secret_access_key=secrets["s3_secret_access_key"],
+        region_name='ap-northeast-2'
+    )
+    s3 = session.client('s3')
+
+    bucket = 'nerds-model'
+    prefix = 'models/'  
+
+    try:
+        response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix)
+        all_models = response.get('Contents', [])
+        if not all_models:
+            return {"status": "error", "message": "No models"}
+
+        # get the latest model
+        latest_model = max(all_models, key=lambda x: x['LastModified'])
+        model_key = latest_model['Key']
+
+        # model download
+        download_path = f"models/{model_key.split('/')[-1]}"
+        s3.download_file(Bucket=bucket, Key=model_key, Filename=download_path)
+        
+        return {"status": "success", "message": f"Latest model {model_key} downloaded to {download_path}."}
+
+    except NoCredentialsError:
+        return {"status": "error", "message": "AWS credentials are not valid."}
+    except ClientError as e:
+        return {"status": "error", "message": str(e)}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}

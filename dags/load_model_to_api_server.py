@@ -1,6 +1,7 @@
 import os, json, csv, spotipy, time, torch
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.operators.bash import BashOperator
 from airflow.providers.ssh.operators.ssh import SSHOperator
 from airflow.providers.mongo.hooks.mongo import MongoHook
@@ -20,16 +21,15 @@ from airflow.hooks.base_hook import BaseHook
 from be_great import GReaT
 
 def save_model_to_registry():
+    secrets = json.loads(open('/opt/airflow/dags/secrets.json').read())
     # 0. set mlflow environments
-    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://mlflow-artifact-store:9000"
+    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://s3.amazonaws.com"
     os.environ["MLFLOW_TRACKING_URI"] = "http://mlflow-server:5000"
-    os.environ["AWS_ACCESS_KEY_ID"] = "minio"
-    os.environ["AWS_SECRET_ACCESS_KEY"] = "miniostorage"
+    os.environ["AWS_ACCESS_KEY_ID"] = secrets["s3_access_key_id"]
+    os.environ["AWS_SECRET_ACCESS_KEY"] = secrets["s3_secret_access_key"]
 
     connection = BaseHook.get_connection("mlflow_default")
     print("Current MLflow Tracking URI:", mlflow.get_tracking_uri())
-
-    secrets = json.loads(open('/opt/airflow/dags/secrets.json').read())
 
     # 1. get data
     conn = pymongo.MongoClient(host=secrets["mongo_host"], 
@@ -128,32 +128,6 @@ def save_model_to_registry():
     return
 
 
-def download_model(model_name, experiment_name):
-    mlflow.set_tracking_uri("http://mlflow-server:5000")
-    print("Current MLflow Tracking URI:", mlflow.get_tracking_uri())
-
-    destination_path = "/opt/airflow/dags"
-
-    # Download model artifacts
-    client = mlflow.MlflowClient()
-    print('Connected!')
-    # get experiment id
-    experiment = client.get_experiment_by_name(experiment_name)
-    if experiment:
-        experiment_id = experiment.experiment_id
-    else:
-        raise Exception(f"Experiment with name '{experiment_name}' not found.")
-
-    # get the latest run by checking runs in the experiment
-    runs = client.search_runs(experiment_ids=[experiment_id]) 
-    if runs:
-        latest_run = max(runs, key=lambda x: x.info.start_time)
-    else:
-        raise Exception("No runs found.")
-    
-    client.download_artifacts(run_id=latest_run.info.run_id, path='xgboost', dst_path='/opt/airflow/dags')
-
-    return
 
 load_model_dag =  DAG(
     dag_id="load-model-to-api-sever",
@@ -167,21 +141,15 @@ save_model = PythonOperator(
     dag=load_model_dag
 )
 
-download_model = PythonOperator(
-    task_id = 'download_model_from_registry',
-    python_callable=download_model,
-    op_kwargs={'model_name': 'xgboost', 'experiment_name': 'billboard-hit-exp'},
-    dag=load_model_dag
-)
 
-copy_model = BashOperator(
-    task_id='copy_model_to_server',
-    bash_command='scp -o StrictHostKeyChecking=no -r -i /opt/airflow/NERDS-key.pem '
-        '/opt/airflow/dags/xgboost /opt/airflow/app.py /opt/airflow/secrets.json /opt/airflow/schemas.py /opt/airflow/docker-compose.yaml /opt/airflow/Dockerfile.fastapi '
-        'ubuntu@ec2-54-180-214-122.ap-northeast-2.compute.amazonaws.com:/home/ubuntu',
-    dag=load_model_dag,
-)
-
+trigger_latest_model_download = SimpleHttpOperator(
+        task_id='trigger_latest_model_download',
+        http_conn_id=secrets["api_server_network"],
+        endpoint='download-latest-model/',
+        method='GET',
+        response_check=lambda response: "success" in response.text,
+        dag=load_model_dag
+    )
 
 container_down = SSHOperator(
     task_id='stop_docker_container',
@@ -196,4 +164,5 @@ container_up = SSHOperator(
     command='nohup docker compose up --build >> /home/ubuntu/logs/$(date +%Y-%m-%d)_log.out 2>&1 &',
     dag=load_model_dag,
 )   
-save_model >> download_model >> copy_model >> container_down >> container_up
+
+save_model >> trigger_latest_model_download >> container_down >> container_up
