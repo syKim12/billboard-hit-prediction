@@ -10,12 +10,16 @@ import asyncio
 import boto3
 from botocore.exceptions import NoCredentialsError, ClientError
 from boto3.session import Session
+from threading import Lock
 
+model_lock = Lock()
 secrets = json.loads(open('/usr/app/secrets.json').read())
+model_path = './xgboost'
 
 def get_model():
-    model = mlflow.sklearn.load_model(model_uri="./xgboost")
-    return model
+    with model_lock:
+        model = mlflow.sklearn.load_model(model_uri=model_path)
+        return model
 
 client_id = secrets["client_id"]
 client_secret = secrets["client_secret"]
@@ -94,7 +98,7 @@ async def download_latest_model():
     s3 = session.client('s3')
 
     bucket = 'nerds-model'
-    prefix = 'models/'  
+    prefix = './xgboost/'  
 
     try:
         response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix)
@@ -107,10 +111,11 @@ async def download_latest_model():
         model_key = latest_model['Key']
 
         # model download
-        download_path = f"models/{model_key.split('/')[-1]}"
-        s3.download_file(Bucket=bucket, Key=model_key, Filename=download_path)
+        global model_path
+        with model_lock:
+            s3.download_file(Bucket=bucket, Key=model_key, Filename=model_path)
         
-        return {"status": "success", "message": f"Latest model {model_key} downloaded to {download_path}."}
+        return {"status": "success", "message": f"Latest model {model_key} downloaded."}
 
     except NoCredentialsError:
         return {"status": "error", "message": "AWS credentials are not valid."}

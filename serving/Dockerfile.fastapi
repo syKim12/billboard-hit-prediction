@@ -9,7 +9,7 @@ RUN pip install -U pip &&\
 
 COPY schemas.py ./schemas.py
 COPY app.py  ./app.py
-COPY xgboost/ ./xgboost/
+#COPY models/xgboost/ ./xgboost/
 COPY secrets.json ./secrets.json
 
 

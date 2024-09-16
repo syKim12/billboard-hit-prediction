@@ -113,6 +113,8 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    env_file:
+      - ./.env
     environment:
       <<: *airflow-common-env
       # Required to handle warm shutdown of the celery workers properly
@@ -283,6 +285,8 @@ services:
         condition: service_healthy
     ports:
       - 5001:5000
+    env_file:
+      - ./.env
     environment:
       AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
@@ -300,6 +304,5 @@ services:
 volumes:
   postgres-db-volume:
   postgres-mlflow-db:
-  minio-volume:
 
 

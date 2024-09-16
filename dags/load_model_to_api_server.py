@@ -20,28 +20,39 @@ from xgboost import XGBClassifier
 from airflow.hooks.base_hook import BaseHook
 from be_great import GReaT
 
+def get_env_variable(name):
+    return os.environ[name]
+
 def save_model_to_registry():
-    secrets = json.loads(open('/opt/airflow/dags/secrets.json').read())
+    #secrets = json.loads(open('/opt/airflow/dags/secrets.json').read())
     # 0. set mlflow environments
-    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://s3.amazonaws.com"
-    os.environ["MLFLOW_TRACKING_URI"] = "http://mlflow-server:5000"
-    os.environ["AWS_ACCESS_KEY_ID"] = secrets["s3_access_key_id"]
-    os.environ["AWS_SECRET_ACCESS_KEY"] = secrets["s3_secret_access_key"]
+    mlflow_s3_endpoint_url = os.getenv("MLFLOW_S3_ENDPOINT_URL", "https://s3.amazonaws.com")
+    mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://mlflow-server:5000")
+    aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+    aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+    mongo_host = os.getenv("MONGO_HOST")
+    mongo_user = os.getenv("MONGO_USER")
+    mongo_pw = os.getenv("MONGO_PW")
+
+    # 환경 변수 설정
+    os.environ["MLFLOW_S3_ENDPOINT_URL"] = mlflow_s3_endpoint_url
+    os.environ["MLFLOW_TRACKING_URI"] = mlflow_tracking_uri
+    os.environ["AWS_ACCESS_KEY_ID"] = aws_access_key_id
+    os.environ["AWS_SECRET_ACCESS_KEY"] = aws_secret_access_key
 
     connection = BaseHook.get_connection("mlflow_default")
     print("Current MLflow Tracking URI:", mlflow.get_tracking_uri())
 
     # 1. get data
-    conn = pymongo.MongoClient(host=secrets["mongo_host"], 
+    conn = pymongo.MongoClient(host=mongo_host, 
                             port=27017, 
-                            username=secrets["mongo_user"], 
-                            password=secrets["mongo_pw"])
+                            username=mongo_user, 
+                            password=mongo_pw)
     db_name = "music"
     db = conn.get_database(db_name)
     chart = db.get_collection("chart")
     non_chart = db.get_collection("non_chart")
     chart_df = pd.DataFrame(list(chart.find()))
-    # chart_df = chart_df[chart_df["Date"].isna() == False]
     non_chart_df = pd.DataFrame(list(non_chart.find()))
     columns = ["Followers", "Acousticness", "Danceability", "Duration_ms", "Energy", 
             "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Tempo", "Valence", "Hit"]
@@ -144,25 +155,11 @@ save_model = PythonOperator(
 
 trigger_latest_model_download = SimpleHttpOperator(
         task_id='trigger_latest_model_download',
-        http_conn_id=secrets["api_server_network"],
+        http_conn_id=os.getenv("API_SERVER_NETWORK"),
         endpoint='download-latest-model/',
         method='GET',
         response_check=lambda response: "success" in response.text,
         dag=load_model_dag
     )
 
-container_down = SSHOperator(
-    task_id='stop_docker_container',
-    ssh_conn_id='ssh_to_ec2',  
-    command='docker compose down',
-    dag=load_model_dag,
-)   
-
-container_up = SSHOperator(
-    task_id='start_docker_container',
-    ssh_conn_id='ssh_to_ec2',  
-    command='nohup docker compose up --build >> /home/ubuntu/logs/$(date +%Y-%m-%d)_log.out 2>&1 &',
-    dag=load_model_dag,
-)   
-
-save_model >> trigger_latest_model_download >> container_down >> container_up
+save_model >> trigger_latest_model_download 
