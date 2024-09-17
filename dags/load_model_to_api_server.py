@@ -26,22 +26,21 @@ def get_env_variable(name):
 def save_model_to_registry():
     #secrets = json.loads(open('/opt/airflow/dags/secrets.json').read())
     # 0. set mlflow environments
-    mlflow_s3_endpoint_url = os.getenv("MLFLOW_S3_ENDPOINT_URL", "https://s3.amazonaws.com")
-    mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://mlflow-server:5000")
-    aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
-    aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+    
     mongo_host = os.getenv("MONGO_HOST")
     mongo_user = os.getenv("MONGO_USER")
     mongo_pw = os.getenv("MONGO_PW")
 
-    # 환경 변수 설정
-    os.environ["MLFLOW_S3_ENDPOINT_URL"] = mlflow_s3_endpoint_url
-    os.environ["MLFLOW_TRACKING_URI"] = mlflow_tracking_uri
-    os.environ["AWS_ACCESS_KEY_ID"] = aws_access_key_id
-    os.environ["AWS_SECRET_ACCESS_KEY"] = aws_secret_access_key
+    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://s3.ap-northeast-2.amazonaws.com"
+    os.environ["MLFLOW_TRACKING_URI"] = "http://mlflow-server:5000"
+    os.environ["AWS_ACCESS_KEY_ID"] = os.getenv("S3_ACCESS_KEY_ID")
+    os.environ["AWS_SECRET_ACCESS_KEY"] = os.getenv("S3_SECRET_ACCESS_KEY")
 
-    connection = BaseHook.get_connection("mlflow_default")
-    print("Current MLflow Tracking URI:", mlflow.get_tracking_uri())
+    
+    mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
+    print("MLFLOW_S3_ENDPOINT_URL:", os.environ["MLFLOW_S3_ENDPOINT_URL"])
+    print("MLFLOW_TRACKING_URI:", os.environ["MLFLOW_TRACKING_URI"])
+
 
     # 1. get data
     conn = pymongo.MongoClient(host=mongo_host, 
@@ -105,18 +104,13 @@ def save_model_to_registry():
     print("Train Accuracy :", train_acc)
     print("Valid Accuracy :", valid_acc)
 
-    
+
+    #connection = BaseHook.get_connection("mlflow_default")
+
     #Logging to MLflow
     try:
-        
-        mlflow.set_tracking_uri("http://mlflow-server:5000")
-        print("Current MLflow Tracking URI:", mlflow.get_tracking_uri())
-        print('MLflow tracking URI set')
-
-        time.sleep(10)  
-
         model_name = "xgboost"  
-        mlflow.set_experiment("billboard-hit-exp")  
+        mlflow.set_experiment("billboard-hit-xgb-exp")  
         print('Experiment set with model name:', model_name)
 
         
@@ -133,8 +127,8 @@ def save_model_to_registry():
 
         return "Model and data logging complete."
     except Exception as e:
-        print("Failed to log data to MLflow:", str(e))
-        return "Failed to log data to MLflow"
+        print(f"An error occurred: {str(e)}")
+        raise
 
     return
 
@@ -154,12 +148,12 @@ save_model = PythonOperator(
 
 
 trigger_latest_model_download = SimpleHttpOperator(
-        task_id='trigger_latest_model_download',
-        http_conn_id=os.getenv("API_SERVER_NETWORK"),
-        endpoint='download-latest-model/',
-        method='GET',
-        response_check=lambda response: "success" in response.text,
-        dag=load_model_dag
-    )
+    task_id='trigger_latest_model_download',
+    http_conn_id='http_fastapi',
+    endpoint='download-latest-model/',
+    method='GET',
+    response_check=lambda response: "success" in response.text,
+    dag=load_model_dag
+)
 
 save_model >> trigger_latest_model_download 

@@ -98,7 +98,7 @@ async def download_latest_model():
     s3 = session.client('s3')
 
     bucket = 'nerds-model'
-    prefix = './xgboost/'  
+    prefix = '/5/'  
 
     try:
         response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix)
