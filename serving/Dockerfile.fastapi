@@ -9,8 +9,7 @@ RUN pip install -U pip &&\
 
 COPY schemas.py ./schemas.py
 COPY app.py  ./app.py
-#COPY models/xgboost/ ./xgboost/
 COPY secrets.json ./secrets.json
-
+COPY log.ini ./log.ini
 
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2", "--limit-concurrency", "5", "--limit-max-requests", "10", "--timeout-keep-alive", "5", "--log-config", "log.ini"]
