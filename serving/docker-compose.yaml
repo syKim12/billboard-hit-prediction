@@ -8,6 +8,8 @@ services:
     container_name: api-with-model
     ports:
       - 8000:8000
+    volumes:
+      - ./logs:/usr/app/logs       
     healthcheck:
       test:
         - CMD
