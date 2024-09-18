@@ -135,7 +135,7 @@ async def download_latest_model():
         with model_service.model_lock:
             for artifact in artifacts:
                 file_key = artifact['Key']
-                file_path = os.path.join(model_service.model_path, *file_key.split('/')[-2:])  # Adjust path as needed
+                file_path = os.path.join(model_service.model_path, *file_key.split('/')[-2:]) 
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 s3.download_file(Bucket=bucket, Key=file_key, Filename=file_path)
 
