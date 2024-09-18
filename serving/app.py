@@ -13,88 +13,99 @@ from botocore.exceptions import NoCredentialsError, ClientError
 from boto3.session import Session
 from threading import Lock
 
-model_lock = Lock()
-secrets = json.loads(open('/usr/app/secrets.json').read())
-model_path = '/usr/models'
+class Config:
+    def __init__(self):
+        self.load_secrets()
 
-def get_model(model_name):
-    with model_lock:
-        model_dir = os.path.join(model_path, model_name)
-        model = mlflow.sklearn.load_model(model_uri=model_dir)
-        return model
+    def load_secrets(self):
+        secrets_path = '/usr/app/secrets.json'
+        with open(secrets_path, 'r') as file:
+            secrets = json.load(file)
+        self.client_id = secrets["client_id"]
+        self.client_secret = secrets["client_secret"]
+        self.s3_access_key_id = secrets["s3_access_key_id"]
+        self.s3_secret_access_key = secrets["s3_secret_access_key"]
 
-client_id = secrets["client_id"]
-client_secret = secrets["client_secret"]
+class SpotifyService:
+    def __init__(self, config):
+        self.config = config
+        self.sp = self.create_spotify_client()
 
-client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    def create_spotify_client(self):
+        credentials_manager = SpotifyClientCredentials(
+            client_id=self.config.client_id,
+            client_secret=self.config.client_secret
+        )
+        return spotipy.Spotify(client_credentials_manager=credentials_manager)
 
-def search_spotify(title, artist): # Sync, since spotipy doens't support async
-    Followers = []
-    Acousticness = []
-    Danceability = []
-    Duration_ms = []
-    Energy = []
-    Instrumentalness = []
-    Liveness = []
-    Loudness = []
-    Speechiness = []
-    Tempo = []
-    Valence = []
+    def search_tracks(self, title, artist):
+        query = f"{artist},{title}"
+        return self.sp.search(q=query, type='track', limit=5)
 
-    track_info = sp.search(q=artist + "," + title, type="track", limit=5)
-    track_id = track_info["tracks"]["items"][0]["id"]
-    artist_id = track_info["tracks"]["items"][0]['artists'][0]['id']
-    artist_info = sp.artist(artist_id)
-    Followers.append(artist_info["followers"]["total"])
-    features = sp.audio_features(track_id)[0]
-    if features is not None:
-        Danceability.append(features["danceability"])
-        Energy.append(features["energy"])
-        Loudness.append(features["loudness"])
-        Speechiness.append(features["speechiness"])
-        Acousticness.append(features["acousticness"])
-        Instrumentalness.append(features["instrumentalness"])
-        Liveness.append(features["liveness"])
-        Valence.append(features["valence"])
-        Tempo.append(features["tempo"])
-        Duration_ms.append(features["duration_ms"])
-    df = pd.DataFrame({
-        "Followers": Followers, 
-        "Acousticness": Acousticness, 
-        "Danceability": Danceability, 
-        "Duration_ms": Duration_ms,
-        "Energy": Energy, 
-        "Instrumentalness": Instrumentalness, 
-        "Liveness": Liveness, 
-        "Loudness": Loudness,
-        "Speechiness": Speechiness, 
-        "Tempo": Tempo, 
-        "Valence": Valence
-    })
-    return df
 
-async def search(title, artist):
+class ModelService:
+    def __init__(self, model_path):
+        self.model_path = model_path
+        self.model_lock = Lock()
+
+    def get_model(self, model_name):
+        with self.model_lock:
+            model_dir = os.path.join(self.model_path, model_name)
+            return mlflow.sklearn.load_model(model_uri=model_dir)
+
+async def search_spotify(title, artist):
     loop = asyncio.get_running_loop()
     with ThreadPoolExecutor() as executor:
-        result = await loop.run_in_executor(executor, search_spotify, title, artist)
-        return result
-
+        followers, acousticness, danceability, duration_ms, energy, instrumentalness, liveness, loudness, speechiness, tempo, valence = [], [], [], [], [], [], [], [], [], [], []
+        track_info = await loop.run_in_executor(executor, spotify_service.search_tracks, title, artist)
+        track_id = track_info["tracks"]["items"][0]["id"]
+        artist_id = track_info["tracks"]["items"][0]['artists'][0]['id']
+        artist_info = spotify_service.sp.artist(artist_id)
+        followers.append(artist_info["followers"]["total"])
+        features = spotify_service.sp.audio_features(track_id)[0]
+        if features is not None:
+            danceability.append(features["danceability"])
+            energy.append(features["energy"])
+            loudness.append(features["loudness"])
+            speechiness.append(features["speechiness"])
+            acousticness.append(features["acousticness"])
+            instrumentalness.append(features["instrumentalness"])
+            liveness.append(features["liveness"])
+            valence.append(features["valence"])
+            tempo.append(features["tempo"])
+            duration_ms.append(features["duration_ms"])
+        df = pd.DataFrame({
+            "Followers": followers, 
+            "Acousticness": acousticness, 
+            "Danceability": danceability, 
+            "Duration_ms": duration_ms,
+            "Energy": energy, 
+            "Instrumentalness": instrumentalness, 
+            "Liveness": liveness, 
+            "Loudness": loudness,
+            "Speechiness": speechiness, 
+            "Tempo": tempo, 
+            "Valence": valence
+        })
+        return df
 
 app = FastAPI()
+config = Config()
+spotify_service = SpotifyService(config)
+model_service = ModelService('/usr/models')
 
 @app.post("/predict", response_model=PredictOut)
 async def predict(song: PredictIn) -> PredictOut:
-    MODEL = get_model('xgboost')
-    df = await search(song.Title, song.Artist)
+    df = await search_spotify(song.Title, song.Artist)
+    MODEL = model_service.get_model('xgboost')
     pred = MODEL.predict(df).item()
     return PredictOut(Hit=pred)
 
 @app.get("/download-latest-model/")
 async def download_latest_model():
     session = Session(
-        aws_access_key_id=secrets["s3_access_key_id"],
-        aws_secret_access_key=secrets["s3_secret_access_key"],
+        aws_access_key_id=config.s3_access_key_id,
+        aws_secret_access_key=config.s3_secret_access_key,
         region_name='ap-northeast-2'
     )
     s3 = session.client('s3')
@@ -121,10 +132,10 @@ async def download_latest_model():
             return {"status": "error", "message": "No artifacts found"}
 
         # Download each artifact file
-        with model_lock:
+        with model_service.model_lock:
             for artifact in artifacts:
                 file_key = artifact['Key']
-                file_path = os.path.join(model_path, *file_key.split('/')[-2:])  # Adjust path as needed
+                file_path = os.path.join(model_service.model_path, *file_key.split('/')[-2:])  # Adjust path as needed
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 s3.download_file(Bucket=bucket, Key=file_key, Filename=file_path)
 
