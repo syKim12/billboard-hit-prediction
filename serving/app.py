@@ -1,4 +1,5 @@
 import json
+import os
 import mlflow
 import pandas as pd
 from fastapi import FastAPI
@@ -14,11 +15,12 @@ from threading import Lock
 
 model_lock = Lock()
 secrets = json.loads(open('/usr/app/secrets.json').read())
-model_path = './xgboost'
+model_path = '/usr/models'
 
-def get_model():
+def get_model(model_name):
     with model_lock:
-        model = mlflow.sklearn.load_model(model_uri=model_path)
+        model_dir = os.path.join(model_path, model_name)
+        model = mlflow.sklearn.load_model(model_uri=model_dir)
         return model
 
 client_id = secrets["client_id"]
@@ -78,12 +80,12 @@ async def search(title, artist):
         result = await loop.run_in_executor(executor, search_spotify, title, artist)
         return result
 
-MODEL = get_model()
 
 app = FastAPI()
 
 @app.post("/predict", response_model=PredictOut)
 async def predict(song: PredictIn) -> PredictOut:
+    MODEL = get_model('xgboost')
     df = await search(song.Title, song.Artist)
     pred = MODEL.predict(df).item()
     return PredictOut(Hit=pred)
@@ -98,24 +100,35 @@ async def download_latest_model():
     s3 = session.client('s3')
 
     bucket = 'nerds-model'
-    prefix = '/5/'  
+    prefix = '5/'  
 
     try:
         response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix)
-        all_models = response.get('Contents', [])
-        if not all_models:
-            return {"status": "error", "message": "No models"}
+        files = response.get('Contents', [])
 
-        # get the latest model
-        latest_model = max(all_models, key=lambda x: x['LastModified'])
-        model_key = latest_model['Key']
+        if not files:
+            return {"status": "error", "message": "No files found"}
 
-        # model download
-        global model_path
+        # get the latest file
+        latest_file = max(files, key=lambda x: x['LastModified'])
+        runid_prefix = '/'.join(latest_file['Key'].split('/')[:-2]) 
+
+        # get objects under the latest directory
+        response = s3.list_objects_v2(Bucket=bucket, Prefix=runid_prefix)
+        artifacts = response.get('Contents', [])
+
+        if not artifacts:
+            return {"status": "error", "message": "No artifacts found"}
+
+        # Download each artifact file
         with model_lock:
-            s3.download_file(Bucket=bucket, Key=model_key, Filename=model_path)
-        
-        return {"status": "success", "message": f"Latest model {model_key} downloaded."}
+            for artifact in artifacts:
+                file_key = artifact['Key']
+                file_path = os.path.join(model_path, *file_key.split('/')[-2:])  # Adjust path as needed
+                os.makedirs(os.path.dirname(file_path), exist_ok=True)
+                s3.download_file(Bucket=bucket, Key=file_key, Filename=file_path)
+
+        return {"status": "success", "message": f"All files from {runid_prefix} downloaded."}
 
     except NoCredentialsError:
         return {"status": "error", "message": "AWS credentials are not valid."}
