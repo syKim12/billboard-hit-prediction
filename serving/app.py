@@ -47,11 +47,15 @@ class ModelService:
     def __init__(self, model_path):
         self.model_path = model_path
         self.model_lock = Lock()
+        self.models = {}
 
     def get_model(self, model_name):
-        with self.model_lock:
-            model_dir = os.path.join(self.model_path, model_name)
-            return mlflow.sklearn.load_model(model_uri=model_dir)
+        if model_name not in self.models:
+            with self.model_lock:
+                if model_name not in self.models:
+                    model_dir = os.path.join(self.model_path, model_name)
+                    self.models[model_name] = mlflow.sklearn.load_model(model_uri=model_dir)
+        return self.models[model_name]
 
 async def search_spotify(title, artist):
     loop = asyncio.get_running_loop()
