@@ -50,7 +50,7 @@ services:
       POSTGRES_PASSWORD: ${AIRFLOW_PG_PWD}
       POSTGRES_DB: ${AIRFLOW_DB}
     volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
+      - postgres-airflow-db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
@@ -306,7 +306,7 @@ services:
 
 
 volumes:
-  postgres-db-volume:
+  postgres-airflow-db:
   postgres-mlflow-db:
 
 
