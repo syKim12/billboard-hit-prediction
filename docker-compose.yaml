@@ -43,10 +43,12 @@ x-airflow-common:
 services:
   postgres:
     image: postgres:13
+    env_file:
+      - ./.env
     environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: airflow
+      POSTGRES_USER: ${AIRFLOW_PG_USER}
+      POSTGRES_PASSWORD: ${AIRFLOW_PG_PWD}
+      POSTGRES_DB: ${AIRFLOW_DB}
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
     ports:
@@ -263,10 +265,12 @@ services:
     container_name: mlflow-backend-store
     volumes:
       - postgres-mlflow-db:/var/lib/postgresql/data
+    env_file:
+      - ./.env
     environment:
-      POSTGRES_USER: mlflowuser
-      POSTGRES_PASSWORD: mlflowpassword
-      POSTGRES_DB: mlflowdatabase
+      POSTGRES_USER: ${MLFLOW_PG_USER}
+      POSTGRES_PASSWORD: ${MLFLOW_PG_PWD}
+      POSTGRES_DB:  ${MLFLOW_PG_DB}
     ports:
       - "5431:5432"
     healthcheck:
