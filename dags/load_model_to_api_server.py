@@ -19,29 +19,24 @@ from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
 from airflow.hooks.base_hook import BaseHook
 from be_great import GReaT
-from load_env import EnvLoader
+from load_config import ConfigLoader
 
-env = EnvLoader()
-env.load_env()
+config = ConfigLoader()
 
 def save_model_to_registry():
     # 0. set mlflow environments
     
-    mongo_host = env.get_env_variable("MONGO_HOST")
-    mongo_user = env.get_env_variable("MONGO_USER")
-    mongo_pw = env.get_env_variable("MONGO_PW")
+    mongo_host = config.mongo_host
+    mongo_user = config.mongo_user
+    mongo_pw = config.mongo_pw
 
     os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://s3.ap-northeast-2.amazonaws.com"
     os.environ["MLFLOW_TRACKING_URI"] = "http://mlflow-server:5000"
-    os.environ["AWS_ACCESS_KEY_ID"] = env.get_env_variable("S3_ACCESS_KEY_ID")
-    os.environ["AWS_SECRET_ACCESS_KEY"] = env.get_env_variable("S3_SECRET_ACCESS_KEY")
-
+    os.environ["AWS_ACCESS_KEY_ID"] = config.s3_access_key_id
+    os.environ["AWS_SECRET_ACCESS_KEY"] = config.s3_secret_access_key
     
     mlflow.set_tracking_uri(env.get_env_variable("MLFLOW_TRACKING_URI"))
-    print("MLFLOW_S3_ENDPOINT_URL:", env.get_env_variable("MLFLOW_S3_ENDPOINT_URL"))
-    print("MLFLOW_TRACKING_URI:", env.get_env_variable("MLFLOW_TRACKING_URI"))
-
-
+ 
     # 1. get data
     conn = pymongo.MongoClient(host=mongo_host, 
                             port=27017, 

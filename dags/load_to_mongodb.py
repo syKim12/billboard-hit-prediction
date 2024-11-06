@@ -17,20 +17,16 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
-from load_env import EnvLoader
+from load_config import ConfigLoader
 
-env = EnvLoader()
-env.load_env()
-MONGO_HOST = env.get_env_variable('MONGO_HOST')
-MONGO_USER = env.get_env_variable('MONGO_USER')
-MONGO_PW = env.get_env_variable('MONGO_PW')
+config = ConfigLoader()
 
 def get_update_date():
     # initial setting
-    client_id = env.get_env_variable('SPOTIFY_CLIENT_ID')
-    client_secret = env.get_env_variable('SPOTIFY_CLIENT_SECRET')
+    spotify_client_id = config.spotify_client_id
+    spotify_client_secret = config.spotify_client_secret
 
-    client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    client_credentials_manager = SpotifyClientCredentials(client_id=spotify_client_id, client_secret=spotify_client_secret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
     playlist_link = "https://open.spotify.com/playlist/6UeSakyzhiEt4NB3UAd6NQ?si=511d3ed1fb874fa6"
@@ -52,10 +48,10 @@ def spotify_csv():
     sp, playlist_URI, track_uris, date = get_update_date()
     try:
         client = pymongo.MongoClient(
-            host=MONGO_HOST,
+            host=config.mongo_host,
             port=27017, 
-            username=MONGO_USER,
-            password=MONGO_PW
+            username=config.mongo_user,
+            password=config.mongo_pw
         )
         db = client['music']
         collection = db['chart']
