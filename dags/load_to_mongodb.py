@@ -53,7 +53,7 @@ def spotify_csv():
     try:
         client = pymongo.MongoClient(
             host=MONGO_HOST,
-            port=27017,  # 예시 포트
+            port=27017, 
             username=MONGO_USER,
             password=MONGO_PW
         )
@@ -101,7 +101,7 @@ def spotify_csv():
 def load_data():
     client = pymongo.MongoClient(
             host=MONGO_HOST,
-            port=27017,  # 예시 포트
+            port=27017,  
             username=MONGO_USER,
             password=MONGO_PW
         )
