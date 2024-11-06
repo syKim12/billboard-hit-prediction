@@ -27,7 +27,7 @@ def get_update_date():
         spotify_client_id = config.spotify_client_id
         spotify_client_secret = config.spotify_client_secret
         print(spotify_client_id)
-        
+
         client_credentials_manager = SpotifyClientCredentials(client_id=spotify_client_id, client_secret=spotify_client_secret)
         sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
@@ -50,6 +50,7 @@ def get_audio_features(sp, track_ids):
     return features
 
 def spotify_csv():
+    print('get-spotify-csv task started!')
     sp, playlist_URI, track_uris, date = get_update_date()
     try:
         client = pymongo.MongoClient(
