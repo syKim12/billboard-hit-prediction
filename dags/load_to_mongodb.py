@@ -17,12 +17,18 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
+from load_env import EnvLoader
+
+env = EnvLoader()
+env.load_env()
+MONGO_HOST = env.get_env_variable('MONGO_HOST')
+MONGO_USER = env.get_env_variable('MONGO_USER')
+MONGO_PW = env.get_env_variable('MONGO_PW')
 
 def get_update_date():
     # initial setting
-    secrets = json.loads(open('/opt/airflow/dags/secrets.json').read())
-    client_id = secrets["spotify_client_id"]
-    client_secret= secrets["spotify_client_secret"]
+    client_id = env.get_env_variable('SPOTIFY_CLIENT_ID')
+    client_secret = env.get_env_variable('SPOTIFY_CLIENT_SECRET')
 
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
@@ -44,10 +50,13 @@ def get_audio_features(sp, track_ids):
 
 def spotify_csv():
     sp, playlist_URI, track_uris, date = get_update_date()
-
     try:
-        hook = MongoHook(mongo_conn_id='mongo_default')
-        client = hook.get_conn()
+        client = pymongo.MongoClient(
+            host=MONGO_HOST,
+            port=27017,  # 예시 포트
+            username=MONGO_USER,
+            password=MONGO_PW
+        )
         db = client['music']
         collection = db['chart']
         print("DB is successfully connected!")
@@ -69,7 +78,9 @@ def spotify_csv():
     artist_uris = [track["track"]["artists"][0]["uri"] for track in playlist_tracks]
     artist_info = [sp.artist(uri) for uri in artist_uris]
     
-    csv_filename = '/opt/airflow/csv/' + date + '_chart.csv'
+    DATA_DIR = os.getenv("AIRFLOW_DATA_DIR", "/opt/airflow/data")
+    csv_filename = os.path.join(DATA_DIR, f"charts_{date}.csv")
+
     with open(csv_filename, 'w', encoding='UTF-8', newline='') as csv_open:
         csv_writer = csv.writer(csv_open)
         csv_writer.writerow(('TrackID','Date','Rank','Title','Artist','Danceability','Energy','Loudness','Speechiness','Acousticness','Instrumentalness','Liveness','Valence','Tempo','Duration_ms', 'Hit', 'Followers'))
@@ -88,13 +99,19 @@ def spotify_csv():
 
 
 def load_data():
-    hook = MongoHook(mongo_conn_id='mongo_default')
-    client = hook.get_conn()
+    client = pymongo.MongoClient(
+            host=MONGO_HOST,
+            port=27017,  # 예시 포트
+            username=MONGO_USER,
+            password=MONGO_PW
+        )
     db = client['music']
     collection = db['chart']
     
     val = get_update_date()
-    filename = '/opt/airflow/csv/' + val[-1] + '_chart.csv'
+    DATA_DIR = os.getenv("AIRFLOW_DATA_DIR", "/opt/airflow/data")
+    filename = os.path.join(DATA_DIR, f"charts_{val[-1]}.csv")
+
     with open(filename, 'r') as file:
         csv_data = csv.DictReader(file)
         documents = list(csv_data)

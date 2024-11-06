@@ -19,27 +19,27 @@ from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
 from airflow.hooks.base_hook import BaseHook
 from be_great import GReaT
+from load_env import EnvLoader
 
-def get_env_variable(name):
-    return os.environ[name]
+env = EnvLoader()
+env.load_env()
 
 def save_model_to_registry():
-    #secrets = json.loads(open('/opt/airflow/dags/secrets.json').read())
     # 0. set mlflow environments
     
-    mongo_host = os.getenv("MONGO_HOST")
-    mongo_user = os.getenv("MONGO_USER")
-    mongo_pw = os.getenv("MONGO_PW")
+    mongo_host = env.get_env_variable("MONGO_HOST")
+    mongo_user = env.get_env_variable("MONGO_USER")
+    mongo_pw = env.get_env_variable("MONGO_PW")
 
     os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://s3.ap-northeast-2.amazonaws.com"
     os.environ["MLFLOW_TRACKING_URI"] = "http://mlflow-server:5000"
-    os.environ["AWS_ACCESS_KEY_ID"] = os.getenv("S3_ACCESS_KEY_ID")
-    os.environ["AWS_SECRET_ACCESS_KEY"] = os.getenv("S3_SECRET_ACCESS_KEY")
+    os.environ["AWS_ACCESS_KEY_ID"] = env.get_env_variable("S3_ACCESS_KEY_ID")
+    os.environ["AWS_SECRET_ACCESS_KEY"] = env.get_env_variable("S3_SECRET_ACCESS_KEY")
 
     
-    mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
-    print("MLFLOW_S3_ENDPOINT_URL:", os.environ["MLFLOW_S3_ENDPOINT_URL"])
-    print("MLFLOW_TRACKING_URI:", os.environ["MLFLOW_TRACKING_URI"])
+    mlflow.set_tracking_uri(env.get_env_variable("MLFLOW_TRACKING_URI"))
+    print("MLFLOW_S3_ENDPOINT_URL:", env.get_env_variable("MLFLOW_S3_ENDPOINT_URL"))
+    print("MLFLOW_TRACKING_URI:", env.get_env_variable("MLFLOW_TRACKING_URI"))
 
 
     # 1. get data
@@ -105,8 +105,6 @@ def save_model_to_registry():
     print("Valid Accuracy :", valid_acc)
 
 
-    #connection = BaseHook.get_connection("mlflow_default")
-
     #Logging to MLflow
     try:
         model_name = "xgboost"  
@@ -121,8 +119,12 @@ def save_model_to_registry():
             mlflow.log_metrics({"train_acc": train_acc, "valid_acc": valid_acc})
             mlflow.sklearn.log_model(sk_model=model_pipeline, artifact_path=model_name, signature=signature, input_example=X_train.iloc[:5])
 
+        DATA_DIR = os.getenv("AIRFLOW_DATA_DIR", "/opt/airflow/data")
+        date_str = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        file_path = os.path.join(DATA_DIR, f"data_{date_str}.csv")
+
         # Close connection
-        df.to_csv("/opt/airflow/data.csv", index=False)  
+        df.to_csv(file_path, index=False)  
         conn.close() 
 
         return "Model and data logging complete."
@@ -136,7 +138,7 @@ def save_model_to_registry():
 
 load_model_dag =  DAG(
     dag_id="load-model-to-api-sever",
-    schedule='0 12 * * 1',
+    schedule=None,
     start_date=datetime(2023,7,20),
     catchup=False)
 
