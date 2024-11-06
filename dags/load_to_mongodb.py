@@ -23,19 +23,24 @@ config = ConfigLoader()
 
 def get_update_date():
     # initial setting
-    spotify_client_id = config.spotify_client_id
-    spotify_client_secret = config.spotify_client_secret
+    try:
+        spotify_client_id = config.spotify_client_id
+        spotify_client_secret = config.spotify_client_secret
+        print(spotify_client_id)
+        
+        client_credentials_manager = SpotifyClientCredentials(client_id=spotify_client_id, client_secret=spotify_client_secret)
+        sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-    client_credentials_manager = SpotifyClientCredentials(client_id=spotify_client_id, client_secret=spotify_client_secret)
-    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+        playlist_link = "https://open.spotify.com/playlist/6UeSakyzhiEt4NB3UAd6NQ?si=511d3ed1fb874fa6"
+        playlist_URI = playlist_link.split("/")[-1].split("?")[0]
+        track_uris = [x["track"]["uri"] for x in sp.playlist_tracks(playlist_URI)["items"]]
+        
+        date = sp.playlist_tracks(playlist_URI)["items"][0]["added_at"].split("T")[0]
 
-    playlist_link = "https://open.spotify.com/playlist/6UeSakyzhiEt4NB3UAd6NQ?si=511d3ed1fb874fa6"
-    playlist_URI = playlist_link.split("/")[-1].split("?")[0]
-    track_uris = [x["track"]["uri"] for x in sp.playlist_tracks(playlist_URI)["items"]]
-    
-    date = sp.playlist_tracks(playlist_URI)["items"][0]["added_at"].split("T")[0]
+        return sp, playlist_URI, track_uris, date
 
-    return sp, playlist_URI, track_uris, date
+    except:
+        print('Error occurred while getting spotify connection!')
 
 def get_audio_features(sp, track_ids):
     features = []
