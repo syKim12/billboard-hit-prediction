@@ -35,7 +35,7 @@ def save_model_to_registry():
     os.environ["AWS_ACCESS_KEY_ID"] = config.s3_access_key_id
     os.environ["AWS_SECRET_ACCESS_KEY"] = config.s3_secret_access_key
     
-    mlflow.set_tracking_uri(env.get_env_variable("MLFLOW_TRACKING_URI"))
+    mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
  
     # 1. get data
     conn = pymongo.MongoClient(host=mongo_host, 
