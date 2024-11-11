@@ -132,7 +132,7 @@ def save_model_to_registry():
 
 
 load_model_dag =  DAG(
-    dag_id="load-model-to-api-sever",
+    dag_id="load-model-to-api-server",
     schedule=None,
     start_date=datetime(2023,7,20),
     catchup=False)
