@@ -102,10 +102,10 @@ def spotify_csv():
 
 def load_data():
     client = pymongo.MongoClient(
-            host=MONGO_HOST,
+            host=config.mongo_host,
             port=27017,  
-            username=MONGO_USER,
-            password=MONGO_PW
+            username=config.mongo_user,
+            password=config.mongo_pw
         )
     db = client['music']
     collection = db['chart']
