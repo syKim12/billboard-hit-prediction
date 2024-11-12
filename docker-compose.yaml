@@ -325,7 +325,7 @@ services:
     command:
       - /bin/sh
       - -c
-      - mlflow server --backend-store-uri postgresql://${MLFLOW_PG_USER}:${MLFLOW_PG_PWD}@mlflow-postgres/${MLFLOW_PG_DB} --default-artifact-root ${MLFLOW_S3_BUCKET_PATH} --host 0.0.0.0
+      - 'mlflow server --backend-store-uri postgresql://${MLFLOW_PG_USER}:${MLFLOW_PG_PWD}@mlflow-postgres/${MLFLOW_PG_DB} --default-artifact-root ${MLFLOW_S3_BUCKET_PATH} --host 0.0.0.0'
 
 
 volumes:
