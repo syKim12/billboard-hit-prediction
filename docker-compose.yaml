@@ -327,7 +327,8 @@ services:
       --backend-store-uri postgresql://${MLFLOW_PG_USER}:${MLFLOW_PG_PWD}@mlflow-postgres/${MLFLOW_PG_DB}
       --default-artifact-root ${MLFLOW_S3_BUCKET_PATH}
       --host 0.0.0.0
-    mem_limit: 2g
+    mem_limit: 3g
+    restart: unless-stopped
 
 volumes:
   postgres-airflow-db:
