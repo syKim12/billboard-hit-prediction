@@ -33,11 +33,11 @@ def get_update_date():
 
         playlist_link = "https://open.spotify.com/playlist/6UeSakyzhiEt4NB3UAd6NQ?si=511d3ed1fb874fa6"
         playlist_URI = playlist_link.split("/")[-1].split("?")[0]
-        track_uris = [x["track"]["uri"] for x in sp.playlist_tracks(playlist_URI)["items"]]
+        # track_uris = [x["track"]["uri"] for x in sp.playlist_tracks(playlist_URI)["items"]]
         
         date = sp.playlist_tracks(playlist_URI)["items"][0]["added_at"].split("T")[0]
 
-        return sp, playlist_URI, track_uris, date
+        return sp, playlist_URI, date
 
     except:
         print('Error occurred while getting spotify connection!')
@@ -51,7 +51,7 @@ def get_audio_features(sp, track_ids):
 
 def spotify_csv():
     print('get-spotify-csv task started!')
-    sp, playlist_URI, track_uris, date = get_update_date()
+    sp, playlist_URI, date = get_update_date()
     try:
         client = pymongo.MongoClient(
             host=config.mongo_host,
@@ -125,6 +125,38 @@ def load_data():
     return
 
 
+def check_if_data_exists():
+    try:
+        client = pymongo.MongoClient(
+            host=config.mongo_host,
+            port=27017, 
+            username=config.mongo_user,
+            password=config.mongo_pw
+        )
+        db = client['music']
+        collection = db['chart']
+        
+        latest_document = collection.find_one({}, sort=[('Date', -1)])
+        
+        _, _, current_date = get_update_date()
+        
+        client.close()
+        
+        if latest_document and latest_document['Date'] == current_date:
+            print('Data already exists!')
+            return False  
+        else:
+            return True  
+    except Exception as e:
+        print(f"Error checking data existence: {e}")
+        return True  
+
+check_data = ShortCircuitOperator(
+    task_id='check_if_data_exists',
+    python_callable=check_if_data_exists,
+    dag=load_csv_mongo_dag
+)
+
 load_csv_mongo_dag =  DAG(
     dag_id="load-csv-to-mongo",
     schedule='47 12 * * *',
@@ -149,4 +181,4 @@ trigger_model_training = TriggerDagRunOperator(
     wait_for_completion=False
 )
     
-get_spotify_csv >> load_data >> trigger_model_training
+check_data >> get_spotify_csv >> load_data >> trigger_model_training
