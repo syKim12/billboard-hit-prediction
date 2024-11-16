@@ -1,6 +1,6 @@
 import os, json, csv, spotipy
 from airflow import DAG
-from airflow.operators.python import PythonOperator
+from airflow.operators.python import PythonOperator, ShortCircuitOperator
 from airflow.operators.bash import BashOperator
 from airflow.providers.ssh.operators.ssh import SSHOperator
 from airflow.providers.mongo.hooks.mongo import MongoHook
