@@ -151,17 +151,17 @@ def check_if_data_exists():
         print(f"Error checking data existence: {e}")
         return True  
 
-check_data = ShortCircuitOperator(
-    task_id='check_if_data_exists',
-    python_callable=check_if_data_exists,
-    dag=load_csv_mongo_dag
-)
-
 load_csv_mongo_dag =  DAG(
     dag_id="load-csv-to-mongo",
     schedule='47 12 * * *',
     start_date=datetime(2023,7,20),
     catchup=False)
+
+check_data = ShortCircuitOperator(
+    task_id='check_if_data_exists',
+    python_callable=check_if_data_exists,
+    dag=load_csv_mongo_dag
+)
 
 get_spotify_csv = PythonOperator(
     task_id='get-spotify-csv',
