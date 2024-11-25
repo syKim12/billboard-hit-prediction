@@ -64,8 +64,9 @@ def spotify_csv():
         db = client['music']
         collection = db['chart']
         print("DB is successfully connected!")
-    except:
-        print("DB is not connected!")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        raise
     
     # check latest updated date
     latest_document = collection.find_one({}, sort=[('Date', -1)])
