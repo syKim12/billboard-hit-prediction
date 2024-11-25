@@ -25,10 +25,6 @@ config = ConfigLoader()
 
 def save_model_to_registry():
     # 0. set mlflow environments
-    
-    mongo_host = config.mongo_host
-    mongo_user = config.mongo_user
-    mongo_pw = config.mongo_pw
 
     os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://s3.ap-northeast-2.amazonaws.com"
     os.environ["MLFLOW_TRACKING_URI"] = "http://mlflow-server:5000"
@@ -36,12 +32,16 @@ def save_model_to_registry():
     os.environ["AWS_SECRET_ACCESS_KEY"] = config.s3_secret_access_key
     
     mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
- 
+    
+    CONF_DIR = '/opt/airflow/config'
     # 1. get data
-    conn = pymongo.MongoClient(host=mongo_host, 
-                            port=27017, 
-                            username=mongo_user, 
-                            password=mongo_pw)
+    conn = pymongo.MongoClient(host=config.mongo_host_scnd, 
+                            port=config.mongo_port_scnd, 
+                            username=config.mongo_user, 
+                            password=config.mongo_pw,
+                            tlsCertificateKeyFile=os.path.join(CONF_DIR, config.tls_cert_key_file_scnd),
+                            tlsCAFile=os.path.join(CONF_DIR, config.tls_ca_file)
+                            )
     db_name = "music"
     db = conn.get_database(db_name)
     chart = db.get_collection("chart")

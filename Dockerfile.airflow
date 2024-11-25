@@ -10,6 +10,4 @@ RUN pip3 install selenium
 RUN pip3 install mlflow pymongo pandas scikit-learn xgboost be-great torch torchvision
 
 COPY GreaT/ ./GreaT/
-COPY ca.crt ./ca.crt 
-COPY primary.pem ./primary.pem
-COPY secondary.pem ./secondary.pem
+COPY config ./config

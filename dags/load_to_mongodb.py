@@ -53,12 +53,14 @@ def spotify_csv():
     print('get-spotify-csv task started!')
     sp, playlist_URI, date = get_update_date()
     try:
-        client = pymongo.MongoClient(
-            host=config.mongo_host,
-            port=27017, 
-            username=config.mongo_user,
-            password=config.mongo_pw
-        )
+        CONF_DIR = '/opt/airflow/config'
+        client = pymongo.MongoClient(host=config.mongo_host_prim, 
+                            port=config.mongo_port_prim, 
+                            username=config.mongo_user, 
+                            password=config.mongo_pw,
+                            tlsCertificateKeyFile=os.path.join(CONF_DIR, config.tls_cert_key_file_prim),
+                            tlsCAFile=os.path.join(CONF_DIR, config.tls_ca_file)
+                            )
         db = client['music']
         collection = db['chart']
         print("DB is successfully connected!")
@@ -101,12 +103,14 @@ def spotify_csv():
 
 
 def load_data():
-    client = pymongo.MongoClient(
-            host=config.mongo_host,
-            port=27017,  
-            username=config.mongo_user,
-            password=config.mongo_pw
-        )
+    CONF_DIR = '/opt/airflow/config'
+    client = pymongo.MongoClient(host=config.mongo_host_prim, 
+                        port=config.mongo_port_prim, 
+                        username=config.mongo_user, 
+                        password=config.mongo_pw,
+                        tlsCertificateKeyFile=os.path.join(CONF_DIR, config.tls_cert_key_file_prim),
+                        tlsCAFile=os.path.join(CONF_DIR, config.tls_ca_file)
+                        )
     db = client['music']
     collection = db['chart']
     
