@@ -14,5 +14,5 @@ class ConfigLoader:
         self.tls_ca_file = os.getenv("TLS_CA_FILE")
         self.tls_cert_key_file_prim = os.getenv("TLS_CERT_KEY_FILE_PRIM")
         self.tls_cert_key_file_scnd = os.getenv("TLS_CERT_KEY_FILE_SCND")
-        self.mongo_port_prim = os.getenv("MONGO_PORT_PRIM")
-        self.mongo_port_scnd = os.getenv("MONGO_PORT_SCND")        
+        self.mongo_port_prim = int(os.getenv("MONGO_PORT_PRIM"))
+        self.mongo_port_scnd = int(os.getenv("MONGO_PORT_SCND"))        
